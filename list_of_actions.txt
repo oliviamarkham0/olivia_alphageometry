@@ -1,0 +1,9 @@
+o = circle o a b c
+d = midpoint d a c
+e = on_circle e b c
+f = on_line f b c
+g = foot g a b c
+k = angle_bisector b a c
+t = on_bline b a
+n = on_pline n a b c
+m = mirror m a c

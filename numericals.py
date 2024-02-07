@@ -700,9 +700,10 @@ def check_perp(points: list[Point]) -> bool:
   return ab.is_perp(cd)
 
 
-def check_cyclic(points: list[Point]) -> bool:
+def check_cyclic(points: list[Point]) -> bool: 
   points = list(set(points))
-  (a, b, c), *ps = points
+  #a, b, c, *ps = points #MODIFIED FROM (a, b, c), *ps = points
+  a,b,c, *ps = points
   circle = Circle(p1=a, p2=b, p3=c)
   for d in ps:
     if not close_enough(d.distance(circle.center), circle.radius):
@@ -1199,7 +1200,7 @@ def set_theme(theme) -> None:
 def get_theme() -> str:
   return THEME
 
-
+#MODIFIED HERE
 def draw(
     points: list[gm.Point],
     lines: list[gm.Line],
@@ -1237,7 +1238,45 @@ def draw(
 
   plt.show(block=block)
 
+'''
+def draw(
+    points: list[gm.Point],
+    lines: list[gm.Line],
+    circles: list[gm.Circle],
+    segments: list[gm.Segment],
+    goal: Any = None,
+    highlights: list[tuple[str, list[gm.Point]]] = None,
+    equals: list[tuple[Any, Any]] = None,
+    block: bool = True,
+    save_to: str = None,
+    theme: str = 'dark',
+) -> None:
+  """Draw everything on the same canvas."""
+  plt.close()
+  imsize = 512 / 100
+  fig, ax = plt.subplots(figsize=(imsize, imsize), dpi=100)
 
+  set_theme(theme)
+
+  if get_theme() == 'dark':
+    ax.set_facecolor((0.0, 0.0, 0.0))
+  else:
+    ax.set_facecolor((1.0, 1.0, 1.0))
+
+  _draw(ax, points, lines, circles, goal, equals, highlights)
+
+  plt.axis('equal')
+  fig.subplots_adjust(left=0, right=1, top=1, bottom=0, wspace=0, hspace=0)
+  if points:
+    xmin = min([p.num.x for p in points])
+    xmax = max([p.num.x for p in points])
+    ymin = min([p.num.y for p in points])
+    ymax = max([p.num.y for p in points])
+    plt.margins((xmax - xmin) * 0.1, (ymax - ymin) * 0.1)
+  ### save figure to disk;
+  #plt.show(block=block)
+  plt.savefig(fname = save_to, dpi=300)
+'''
 def close_enough(a: float, b: float, tol: float = 1e-12) -> bool:
   return abs(a - b) < tol
 

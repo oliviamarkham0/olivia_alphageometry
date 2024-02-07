@@ -1,0 +1,11 @@
+a b c d = isquare a b c d; e = midpoint e a c ? cong c d d a
+a b c d = isquare a b c d; e = midpoint e a c ? cong a b b c; d : para a b c d
+a b c d = isquare a b c d; e = midpoint e a c ? perp a d d c
+a b c d = isquare a b c d; e = midpoint e a c ? para a d b c; perp a d d c
+a b c d = isquare a b c d; e = midpoint e a c ? perp a c b d
+a b c d = isquare a b c d; e = midpoint e a c ? cong b c c d
+a b c d = isquare a b c d; e = midpoint e a c ? perp a b b c
+a b c d = isquare a b c d; e = midpoint e a c ? para a b c d
+a b c d = isquare a b c d; e = midpoint e a c ? cong a c b d
+a b c d = isquare a b c d; e = midpoint e a c ? coll e a c
+a b c d = isquare a b c d; e = midpoint e a c ? cong e a e c

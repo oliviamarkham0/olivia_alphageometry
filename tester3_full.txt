@@ -1,0 +1,1 @@
+a b c d = isquare a b c d; e = midpoint e a c
