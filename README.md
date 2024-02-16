@@ -1,3 +1,27 @@
+# Updates
+
+To generate the synthetic dataset run the following files:
+
+```
+create_premises.py
+```
+```
+create_problems.py
+```
+```
+run.py
+```
+
+To visualize a single problem, run
+```
+visualizer.py
+```
+
+To generate a histogram of the distribution of synthetic data, run
+```
+proof_length.py
+```
+
 
 # Solving Olympiad Geometry without Human Demonstrations
 
