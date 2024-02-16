@@ -3,23 +3,23 @@
 To generate the synthetic dataset run the following files:
 
 ```
-create_premises.py
+python3 create_premises.py
 ```
 ```
-create_problems.py
+python3 create_problems.py
 ```
 ```
-run.py
+python3 run.py
 ```
 
 To visualize a single problem, run
 ```
-visualizer.py
+python3 visualizer.py
 ```
 
 To generate a histogram of the distribution of synthetic data, run
 ```
-proof_length.py
+python3 proof_length.py
 ```
 
 
