@@ -502,6 +502,7 @@ class Graph:
         g = Graph()
         added = []
         plevel = 0
+        #print(f"PR: {pr}")
         for clause in pr.clauses:
           adds, plevel = g.add_clause(
               clause, plevel, definitions, verbose=verbose

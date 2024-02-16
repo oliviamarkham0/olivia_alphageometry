@@ -66,6 +66,9 @@ class Node:
     self.num = None
     self.change = set()  # what other nodes' num rely on this node?
 
+  def __str__(self):
+    return f"Node {self.name}"
+
   def set_rep(self, node: Node) -> None:
     if node == self:
       return
@@ -324,11 +327,15 @@ def bfs_backtrack(
 
 
 class Point(Node):
-  pass
+  def __str__(self):
+    return f"Point {self.name}"
 
 
 class Line(Node):
   """Node of type Line."""
+  
+  def __str__(self):
+    return f"Point {self.name}"
 
   def new_val(self) -> Direction:
     return Direction()

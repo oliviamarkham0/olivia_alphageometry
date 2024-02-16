@@ -158,7 +158,7 @@ class Problem:
     return data
 
   @classmethod
-  def from_txt(cls, data: str, translate: bool = True) -> Problem:
+  def from_txt(cls, data: str, translate: bool = False) -> Problem:
     """Load a problem from a str object."""
     url = ''
     if '\n' in data:
@@ -675,7 +675,6 @@ def maybe_make_equal_pairs(
 
 class Dependency(Construction):
   """Dependency is a predicate that other predicates depend on."""
-
   def __init__(
       self, name: str, args: list[gm.Point], rule_name: str, level: int
   ):

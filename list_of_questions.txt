@@ -1,7 +1,0 @@
-eqangle
-cong
-coll
-cyclic
-n_coll
-perp
-para
