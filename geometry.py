@@ -335,7 +335,7 @@ class Line(Node):
   """Node of type Line."""
   
   def __str__(self):
-    return f"Point {self.name}"
+    return f"Line {self.name}"
 
   def new_val(self) -> Direction:
     return Direction()
@@ -371,12 +371,16 @@ class Line(Node):
 
 
 class Segment(Node):
+  def __str__(self):
+    return f"Segment {self.name}"
 
   def new_val(self) -> Length:
     return Length()
 
 
 class Circle(Node):
+  def __str__(self):
+    return f"Circle {self.name}"
   """Node of type Circle."""
 
   def why_cyclic(self, points: list[Point], level: int = None) -> list[Any]:
@@ -489,6 +493,8 @@ def name_map(struct: Any) -> Any:
 
 
 class Angle(Node):
+  def __str__(self):
+    return f"Angle {self.name}"
   """Node of type Angle."""
 
   def new_val(self) -> Measure:

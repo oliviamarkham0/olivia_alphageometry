@@ -19,15 +19,20 @@ Please refer to README.md for detailed instructions.
 """
 
 import traceback
+from time import time
 
+start_time = time()
 from absl import app
 from absl import flags
 from absl import logging
 import ddar
+#print(f"Took {time()-start_time} seconds [1]")
+#start_time = time()
 import graph as gh
-import lm_inference as lm
+#import lm_inference as lm #all AG commented out to make DDAR faster
 import pretty as pt
 import problem as pr
+
 
 
 _GIN_SEARCH_PATHS = flags.DEFINE_list(
@@ -178,14 +183,14 @@ def write_solution(g: gh.Graph, p: pr.Problem, out_file: str) -> None:
       'a01': '(Ratio chase)',
       'a02': '(Angle chase)',
   }
-
+  breakpoint()
   solution += '\n\n * Proof steps:\n'
   for i, step in enumerate(proof_steps):
     _, [con] = step
     nl = proof_step_string(step, refs, last_step=i == len(proof_steps) - 1)
-    rule_name = r2name.get(con.rule_name, '')
+    rule_name = r2name.get(con.rule_name, '') #ex. SSS or Similar Triangles
     nl = nl.replace('\u21d2', f'{rule_name}\u21d2 ')
-    solution += '{:03}. '.format(i + 1) + nl + '\n'
+    solution += '{:03}. '.format(i + 1) + nl + '\n' #this is the step number (ex. [001], [002], [003], etc.)
 
   solution += '==========================\n'
   logging.info(solution)
@@ -194,14 +199,14 @@ def write_solution(g: gh.Graph, p: pr.Problem, out_file: str) -> None:
       f.write(solution)
     logging.info('Solution written to %s.', out_file)
 
-
-def get_lm(ckpt_init: str, vocab_path: str) -> lm.LanguageModelInference:
+#AG commented out to make DDAR faster
+'''def get_lm(ckpt_init: str, vocab_path: str) -> lm.LanguageModelInference:
   lm.parse_gin_configuration(
       _GIN_FILE.value, _GIN_PARAM.value, gin_paths=_GIN_SEARCH_PATHS.value
   )
 
   return lm.LanguageModelInference(vocab_path, ckpt_init, mode='beam_search')
-
+'''
 
 def run_ddar(g: gh.Graph, p: pr.Problem, out_file: str) -> bool:
   """Run DD+AR.
@@ -223,11 +228,13 @@ def run_ddar(g: gh.Graph, p: pr.Problem, out_file: str) -> bool:
 
   write_solution(g, p, out_file)
 
+  #NO DRAWING:
+  '''
   gh.nm.draw(
       g.type2nodes[gh.Point],
       g.type2nodes[gh.Line],
       g.type2nodes[gh.Circle],
-      g.type2nodes[gh.Segment])
+      g.type2nodes[gh.Segment])'''
   return True
 
 
@@ -314,7 +321,7 @@ def translate_constrained_to_constructive(
 
 
 def check_valid_args(name: str, args: list[str]) -> bool:
-  """Check whether a predicate is grammarically correct.
+  """Check whether a predicate is grammatically correct.
 
   Args:
     name: str: name of the predicate
@@ -484,8 +491,8 @@ class BeamQueue:
   def __len__(self) -> int:
     return len(self.queue)
 
-
-def run_alphageometry(
+#AG commented out to make DDAR faster
+'''def run_alphageometry(
     model: lm.LanguageModelInference,
     p: pr.Problem,
     search_depth: int,
@@ -599,8 +606,28 @@ def run_alphageometry(
     beam_queue = new_queue
 
   return False
+'''
+'''
+import os
 
-
+def process_problems(problems, output_directory):
+  for problem_name in problems:
+    this_problem = problems[problem_name]
+    output_path = os.path.join(output_directory, f"{problem_name}.proof.txt")
+    g, _ = gh.Graph.build_problem(this_problem, DEFINITIONS)
+    run_ddar(g, this_problem, output_path)
+    
+def main(_):
+  global DEFINITIONS
+  global RULES
+  
+  DEFINITIONS = pr.Definition.from_txt_file(_DEFS_FILE.value, to_dict=True)
+  RULES = pr.Theorem.from_txt_file(_RULES_FILE.value, to_dict=True)
+  need_rename = _MODE.value != 'ddar'
+  problems = pr.Problem.from_txt_file(_PROBLEMS_FILE.value, to_dict=True, translate=need_rename)
+  
+  
+'''
 def main(_):
   global DEFINITIONS
   global RULES
@@ -633,6 +660,8 @@ def main(_):
     g, _ = gh.Graph.build_problem(this_problem, DEFINITIONS)
     run_ddar(g, this_problem, _OUT_FILE.value)
 
+  #AG commented out to make DDAR faster (THE FOLLOWING SHOULD BE COMMENTED OUT)
+  '''
   elif _MODE.value == 'alphageometry':
     model = get_lm(_CKPT_PATH.value, _VOCAB_PATH.value)
     run_alphageometry(
@@ -645,7 +674,6 @@ def main(_):
 
   else:
     raise ValueError(f'Unknown FLAGS.mode: {_MODE.value}')
-
-
+'''
 if __name__ == '__main__':
   app.run(main)

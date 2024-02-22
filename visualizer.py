@@ -1,17 +1,16 @@
-from problem import Problem, Definition, Theorem, EmptyDependency
+from problem import Problem, Definition, Theorem
 from graph import Graph
 import graph as gh
-from timeout_decorator import timeout, TimeoutError
+from timeout_decorator import timeout
 
 
 defs_file = 'defs.txt'
 theorems_file = 'rules.txt'
-input_str = "a b c = triangle a b c; d = eq_triangle d b a; e = midpoint e a d; f = on_bline f b a; g = midpoint g b c; h = midpoint h c g; i = on_bline i e b; j = eq_triangle j a d; k = on_tline k i h b; l = on_tline l e h b; m = midpoint m l b; n = angle_bisector n k g c; o = eq_triangle o n h"
-@timeout(5)  # Timeout in seconds (1 seconds)
+input_str = "a b c = triangle a b c; d = incenter d a c b; e = on_pline e a d b; f = angle_mirror f e b d; g = angle_bisector g b d a; h = eqangle3 h b c e d f; i = angle_bisector i d h a; j = eqangle3 j i e b c d; k = circle k g h a; l = excenter2 l d f g k e a; m = angle_bisector m k c l; n = eqdistance n d f a; o = segment o k ? eqangle g h g k h k g h"
+@timeout(10)
 def process_problem(input_str, defs_file, theorems_file):
     problem = Problem.from_txt(input_str)
     definitions = Definition.from_txt_file(defs_file, to_dict=True)
-    theorems = Theorem.from_txt_file(theorems_file, to_dict=True)
     graph, dependencies = Graph.build_problem(problem, definitions, verbose=False)
     return graph
 

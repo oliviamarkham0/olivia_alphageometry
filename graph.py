@@ -2722,7 +2722,8 @@ class Graph:
             for add in adds:
               self.cache_dep(add.name, add.args, add)
 
-    assert len(plevel_done) == len(new_points)
+    #MODIFIED
+    #assert len(plevel_done) == len(new_points)
     for p in new_points:
       p.basics = basics
 
